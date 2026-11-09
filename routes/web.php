@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Soap\LibrarySoapController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PeminjamanController;
@@ -30,8 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/buku/{buku}/edit', [BukuController::class, 'edit'])->name('buku.edit');
     Route::put('/buku/{buku}', [BukuController::class, 'update'])->name('buku.update');
     Route::delete('/buku/{buku}', [BukuController::class, 'destroy'])->name('buku.destroy');
-    
+
     // Transaksi Sirkulasi
     Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
     Route::post('/peminjaman/{id}/kembali', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembali');
 });
+
+// Web Service SOAP (Minggu 9) - Bebas Pustaka
+Route::get('/soap/sipus.wsdl', [LibrarySoapController::class, 'wsdl']);
+Route::post('/soap/sipus', [LibrarySoapController::class, 'handle']);
